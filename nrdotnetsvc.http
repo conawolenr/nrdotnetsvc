@@ -1,0 +1,6 @@
+@nrdotnetsvc_HostAddress = http://localhost:5187
+
+GET {{nrdotnetsvc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

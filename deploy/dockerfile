@@ -1,0 +1,17 @@
+# syntax=docker/dockerfile:1
+FROM bitnami/dotnet-sdk AS build
+
+MAINTAINER Clem Onawole "conawole@newrelic.com"
+RUN apt-get update
+
+
+RUN git clone https://github.com/murpheux/nrdotnetsvc.git
+RUN cd nrdotnetsvc
+RUN dotnet build
+RUN dotnet publish -c Release -r linux-arm64 --output ./run
+
+FROM bitnami/dotnet AS execute
+WORKDIR /app
+COPY --from=build nrdotnetsc/run/* /app
+
+CMD ["dotnet nrdotnetsvc.dll"]
